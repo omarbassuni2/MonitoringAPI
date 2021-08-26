@@ -1,0 +1,59 @@
+<%- include('partials/header'); -%>
+<h1>Dashboard</h1>
+<head>
+    <script src='https://cdn.plot.ly/plotly-2.3.1.min.js'></script>
+</head>
+<!-- make the Name in a row standalone, and the reports in a row that extends-->
+<body>
+    <table>
+        <thead>
+            <tr> 
+                <th>Name</th>
+                <th>statusCode</th>
+                <th>statusMessage</th>
+                <th>outages</th>
+                <th>downtime</th>
+                <th>uptime</th>
+                <th>count</th>
+                <th>history</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <p id='check'></p>
+    <button onclick="wrapper()">Get Report</button>
+</body>
+
+<script src="../helpers/pollingRequests.js"></script>
+<script>
+
+const cookieValue = "<%= cookieValue %>";
+
+//document.getElementById("check").innerHTML = arr[1];
+function wrapper(){
+    var res  = fetch('/report')
+    .then(data => console.log(data))
+    .catch(error => console.log(error))
+    
+    /*setInterval( () => {
+    function getReport(e){
+        e.preventDefault();
+    }
+
+    }, 1000 * 5);*/
+}
+
+</script>
+<!--const { name, url, protocol, path, port,
+    webhook, timeout, interval, threshold,
+    auth, httpHeaders, assert, tags,ignoreSSL } 
+    
+var data = [
+    {
+      x: ['giraffes', 'orangutans', 'monkeys'],
+      y: [20, 14, 23],
+      type: 'bar'
+    }
+  ];
+  
+  Plotly.newPlot('myDiv', data);-->

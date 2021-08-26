@@ -1,0 +1,81 @@
+<%- include('partials/header'); -%>
+<form>
+    <label>Check Name</label>
+    <input type="text" name="name" required placeholder="Enter the check name" value="google"/>
+    <label for="url">URL</label>
+    <input type="text" name="url" required placeholder="e.g. www.google.com" value="www.google.com"/>
+    <label>Protocol</label>
+    <input type="text" name="protocol" value="http:" placeholder="e.g. http:"/>
+
+    <label>Path (Optional)</label>
+    <input type="text" name="path" value="/"/>
+    <label>Port (Optional)</label>
+    <input type="text" name="port" value="80"/>
+    <label>webhook (Optional)</label>
+    <input type="url" name="webhook" value=""/>
+
+    <label>Timeout (Optional)</label>
+    <input type="number" name="timeout" placeholder="Enter a number" value=""/>
+    <label>Interval (Optional)</label>
+    <input type="number" name="interval" placeholder="Enter a number" value=""/>
+    <label>Threshold (Optional)</label>
+    <input type="number" name="threshold" placeholder="Enter a number" value="1"/>
+    
+    <label>Authentication (Optional)</label>
+    <input type="username" name="auth" value="" placeholder="E.g. 'user:password' "/>
+
+    <label>httpHeaders (Optional)</label>
+    <input type="text" name="httpHeaders" value="'Content-Type': 'application/json'" placeholder="Enter pairs of {key: value, }"/>
+    <label>Assert (Optional)</label>
+    <input type="number" name="assert" placeholder="Enter a number" value=""/>
+    <label>Tags (Optional)</label>
+    <input type="text" name="tags" value=""/>
+    <label>IgnoreSSL (Optional)</label>
+    <select id="ignoreSSL" name="ignoreSSL" value="false">
+        <option value="false">False</option>
+        <option value="true">True</option>
+    </select>
+    <button type="submit">Add A check!</button>
+</form>
+<script>
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // get the values
+        const name = form.name.value;
+        const url = form.url.value;
+        const protocol = form.protocol.value;
+        const path = form.path.value;
+        const port = form.port.value;
+        const webhook = form.webhook.value;
+        const timeout = Number(form.timeout.value);
+        const interval = Number(form.interval.value);
+        const threshold = Number(form.threshold.value);
+        const auth = form.auth.value;
+        const httpHeaders = form.httpHeaders.value;
+        const assert = Number(form.assert.value);
+        const tags = form.tags.value;
+        const ignoreSSL = form.ignoreSSL.value;
+        
+        const res = await fetch('/addcheck', {
+            method: 'POST',
+            body: JSON.stringify({  name,
+                                    url,
+                                    protocol,
+                                    path,
+                                    port,
+                                    webhook,
+                                    timeout,
+                                    interval,
+                                    threshold,
+                                    auth,
+                                    httpHeaders,
+                                    assert,
+                                    tags,
+                                    ignoreSSL }),
+            headers: {'content-type': 'application/json'}
+            });
+    });
+</script>
